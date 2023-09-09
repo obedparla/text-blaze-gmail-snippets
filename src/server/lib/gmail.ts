@@ -13,6 +13,7 @@ export async function getEmails(accessToken: string, maxResults: number) {
     let response = await gmail.users.messages.list({
       userId: "me",
       maxResults: maxResults,
+      labelIds: ["SENT"],
     });
 
     if (response) {
