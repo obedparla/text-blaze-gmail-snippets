@@ -1,14 +1,33 @@
 import natural from "natural";
+import nlp from "wink-nlp-utils";
 
 export function getSnippetsFromText(
   textArray: string[],
-  similarityThreshold = 0.9,
+  similarityThreshold = 0.85,
 ) {
-  const snippetsMap: { [key: string]: number } = {};
+  const allSentences = textArray.flatMap((text) => {
+    let cleanText = text.replaceAll(/\s+|>|\r\n/g, " ");
 
-  // https://naturalnode.github.io/natural/Tokenizers.html#tokenizers
-  const tokenizer = new natural.SentenceTokenizerNew();
-  const allSentences = textArray.flatMap((text) => tokenizer.tokenize(text));
+    // todo maybe I should split based on \r\n here too
+    const shortSentencesTokens = cleanText.split(/(?<=[,.;!?:])\s*/);
+
+    const longSentencesTokens = nlp.string.sentences(cleanText) as string[];
+
+    const sentences = [...shortSentencesTokens, ...longSentencesTokens].filter(
+      (text) => {
+        const numberOfWords = text.split(" ").length;
+
+        return numberOfWords > 1;
+      },
+    );
+
+    // in case a short sentence and a long sentence collide
+    return [...new Set([...sentences])];
+  });
+
+  console.log("allSentences", allSentences);
+
+  const snippetsMap: { [key: string]: number } = {};
 
   allSentences.forEach((sentenceToCompare, parentIndex) => {
     for (
@@ -43,16 +62,3 @@ export function getSnippetsFromText(
 
   return duplicatedSnippetsSortedByOccurrences;
 }
-
-export const texts2 = [
-  "The quick brown fox jumps ovr the lazy dg. It's an old typing exercise.\n\nMany people have used it to practice their typing. The sentence utilizes every letter in the English alphabet.",
-  "It's an old typing exercise. The quick brown fox jumps over the lazy dog. This sentence is particularly famous.\n\nMany people have used it to practice their typing. Keyboards have been worn out with it.",
-  "Many people have used it to practice their typing. Typists and writers alike appreciate its utility.\n\nThe quick brown fox jumps over the lazy dog. It's an old typing exercise. The sentence utilizes every letter in the English alphabet.",
-  "For decades, people have practiced typing with this sentence. The quick brown fox jumps over the lazy dog.\n\nIt's an old typing exercise. Many people find it quite useful.",
-  "Did you know? The quick brown fox jumps over the lazy dog is quite a popular phrase.\n\nMany people have used it to practice their typing. It's an old typing exercise, known for its comprehensive use of the English alphabet.",
-  "The sentence utilizes every letter in the English alphabet. That's why the quick brown fox jumps over the lazy dog is famous.\n\nMany people have used it to practice their typing. It's more than just a random sentence.",
-  "While it may seem random, the quck brown fox jups over the lazy dog is a staple in typing classes.\n\nIt's an old typing exercise. Many students have typed it out, hoping to perfect their skills.",
-  "In the world of typing, some sentences stand out. Th quick brown fox jumps over th lazy dog is one of them.\n\nIt's an old typing exercise. Every aspiring typist has likely encountered it.",
-  "It's an old typing exercise, and for good reason. The quick brwn fox jumps over the lazy dg is more than just a sentence.\n\nMany people have used it to practice their typing. It encapsulates the entirety of the English alphabet.",
-  "Have you typed it? The quick brown fox jumps over the lazy dog is a challenge for many beginners.\n\nIt's an old typing exercise. Typing it correctly means you've used every letter in the English language.",
-];
