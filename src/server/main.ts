@@ -5,7 +5,7 @@ import cors from "cors";
 import passport from "passport";
 import { AuthRoutes } from "./routes/auth.route";
 import { passportGoogleStrategy } from "./middleware/passport";
-import { GmailRoutes } from "./routes/gmail.route";
+import { SnippetsRoutes } from "./routes/snippets.route";
 
 const app = express();
 
@@ -38,7 +38,7 @@ passport.deserializeUser((obj: Express.User, done) => {
 passport.use("google", passportGoogleStrategy);
 
 app.use(AuthRoutes);
-app.use(GmailRoutes);
+app.use(SnippetsRoutes);
 
 ViteExpress.listen(app, 3000, () =>
   console.log("Server is listening on port 3000..."),

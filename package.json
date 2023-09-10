@@ -11,6 +11,7 @@
     "cors": "^2.8.5",
     "express": "^4.18.2",
     "express-session": "^1.17.3",
+    "gmail-api-parse-message-ts": "^2.2.32",
     "googleapis": "^126.0.1",
     "natural": "^6.7.1",
     "passport": "^0.6.0",
@@ -20,7 +21,8 @@
     "react-dom": "^18.2.0",
     "ts-node": "^10.9.1",
     "typescript": "^4.9.3",
-    "vite-express": "*"
+    "vite-express": "*",
+    "wink-nlp-utils": "^2.1.0"
   },
   "devDependencies": {
     "@types/cors": "^2.8.14",
