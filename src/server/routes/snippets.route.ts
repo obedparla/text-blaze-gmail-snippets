@@ -6,8 +6,8 @@ const router = express.Router();
 
 router.post("/gmail-snippets", async (req, res) => {
   if (req.isAuthenticated() && req.user.accessToken) {
-    const maybeEmailsData = await getEmails(req.user.accessToken, 20).catch(
-      (e) => res.send({ error: e }),
+    const maybeEmailsData = await getEmails(req, 20).catch((e) =>
+      res.send({ error: e }),
     );
 
     if (!maybeEmailsData) {
@@ -20,7 +20,10 @@ router.post("/gmail-snippets", async (req, res) => {
           getPlainTextEmailWithNoHistory(email.data),
         );
 
-        const snippets = getSnippetsFromText(plainTextEmailBodies);
+        const snippets = getSnippetsFromText(
+          plainTextEmailBodies,
+          req.body?.sensitivity,
+        );
 
         res.send({
           snippets,
