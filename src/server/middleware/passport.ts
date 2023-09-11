@@ -2,13 +2,10 @@ import googleStrategy from "passport-google-oauth20";
 import { Profile } from "passport";
 
 const GoogleStrategy = googleStrategy.Strategy;
-
 const passportGoogleStrategy = new GoogleStrategy(
   {
-    // todo get from .env
-    clientID:
-      "672582507788-7krtf8ukh00brnjca4a2febiqb1gf8ts.apps.googleusercontent.com",
-    clientSecret: "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",
+    clientID: process.env.GOOGLE_CLIENT_ID as string,
+    clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
     callbackURL: "/auth/google/callback",
   },
   (accessToken, refreshToken, profile, done) => {

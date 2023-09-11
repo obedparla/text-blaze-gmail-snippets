@@ -6,7 +6,6 @@ export function getSnippetsFromText(
   similarityThreshold = 0.85,
 ) {
   const allSentences = textArray.flatMap((text) => {
-    // todo splitting \r\n may yield even better results
     const textLines = text.split(/\r?\n/gm);
 
     const sentences = textLines

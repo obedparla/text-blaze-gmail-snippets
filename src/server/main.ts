@@ -1,3 +1,7 @@
+import dotenv from "dotenv";
+
+dotenv.config();
+
 import express from "express";
 import ViteExpress from "vite-express";
 import session from "express-session";
@@ -14,8 +18,7 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use(
   session({
-    // todo get from .env
-    secret: "some_random_secret",
+    secret: process.env.SESSION_SECRET as string,
     resave: false,
     saveUninitialized: true,
   }),
@@ -38,6 +41,7 @@ app.use(AuthRoutes);
 app.use("/v1", SnippetsRoutes);
 app.use("/v1", UserRoutes);
 
+// port is hardcoded since it's in the whitelist for google auth
 ViteExpress.listen(app, 3000, () =>
   console.log("Server is listening on port 3000..."),
 );

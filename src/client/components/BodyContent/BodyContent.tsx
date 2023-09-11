@@ -17,8 +17,6 @@ export function BodyContent() {
     fetchFromUrl<UserData>("/v1/user_data", { method: "POST" }),
   );
 
-  console.log("data user", data);
-
   if (isError) {
     return <div>{`Failed to load user data. Error: ${error}`}</div>;
   }
