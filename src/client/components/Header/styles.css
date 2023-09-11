@@ -1,0 +1,22 @@
+.header{
+    padding: 12px;
+    background: var(--brandColor);
+    box-shadow: rgba(0, 0, 0, 0.075) 0 1px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+
+.header__name{
+    font-size: 18px;
+    font-weight: 600;
+    margin-left: 20px;
+    display: flex;
+    align-items: center;
+    color: white;
+}
+
+.header__links{
+    margin-right: 18px;
+}

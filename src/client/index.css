@@ -1,0 +1,34 @@
+:root {
+  --brandColor: #e04f40;
+  --secondaryBrandColor: #007886;
+}
+
+body {
+  background: #e6e6e6;
+}
+
+.hero_section {
+  padding: 60px;
+  background: #007886;
+  display: flex;
+  justify-content: center;
+  color: white;
+  margin: 14px;
+  border-radius: 8px;
+}
+
+.hero_section__content img {
+  width: 35%;
+}
+
+.hero_section__content {
+  max-width: 800px;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.content__wrapper {
+  max-width: 800px;
+  margin: 40px auto;
+}

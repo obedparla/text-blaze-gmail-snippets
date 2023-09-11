@@ -3,6 +3,11 @@ declare namespace Express {
     user: User & {
       accessToken?: string;
       refreshToken?: string;
+      _json?: {
+        name: string;
+        given_name: string;
+        email: string;
+      };
     };
   }
 }
