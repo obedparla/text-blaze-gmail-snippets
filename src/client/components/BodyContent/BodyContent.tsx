@@ -10,7 +10,6 @@ import {
   CardHeader,
   Heading,
   Spinner,
-  Text,
 } from "@chakra-ui/react";
 
 export function BodyContent() {
@@ -39,7 +38,7 @@ export function BodyContent() {
   return (
     <>
       {data?.loggedIn ? (
-        <Card>
+        <Card variant={"elevated"}>
           <CardHeader>
             <Heading size="md">Snippets:</Heading>
           </CardHeader>
@@ -51,7 +50,7 @@ export function BodyContent() {
           </CardFooter>
         </Card>
       ) : (
-        <Card>
+        <Card variant={"elevated"}>
           <CardHeader>
             <Heading size="md">Please log in to use the app</Heading>
           </CardHeader>
