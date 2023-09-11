@@ -6,14 +6,12 @@ export function getSnippetsFromText(
   similarityThreshold = 0.85,
 ) {
   const allSentences = textArray.flatMap((text) => {
-    let cleanText = text.replaceAll(/\s+|>|\r\n/g, " ");
-
-    // todo maybe I should split based on \r\n here too
-    const shortSentencesTokens = cleanText.split(/(?<=[,.;!?:])\s*/);
+    // todo splitting \r\n may yield even better results
+    let cleanText = text.replaceAll(/\s+/g, " ");
 
     const longSentencesTokens = nlp.string.sentences(cleanText) as string[];
 
-    const sentences = [...shortSentencesTokens, ...longSentencesTokens].filter(
+    const sentences = longSentencesTokens.filter(
       (text) => {
         const numberOfWords = text.split(" ").length;
 
