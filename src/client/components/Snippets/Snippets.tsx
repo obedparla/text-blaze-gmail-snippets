@@ -5,6 +5,11 @@ import { SnippetsData } from "../../types/snippetsData";
 import "./snippets.css";
 import {
   Flex,
+  NumberDecrementStepper,
+  NumberIncrementStepper,
+  NumberInput,
+  NumberInputField,
+  NumberInputStepper,
   Radio,
   RadioGroup,
   Spinner,
@@ -19,16 +24,17 @@ import { SensitivitySlider } from "./components/SensitivitySlider";
 export function Snippets() {
   const [orderBy, orderBySet] = useState<"asc" | "desc">("asc");
   const [sensitivity, sensitivitySet] = useState(0.85);
+  const [emailsToAnalyze, emailsToAnalyzeSet] = useState(20);
 
   const { isError, isLoading, data, error } = useQuery({
-    queryKey: ["snippetsData", sensitivity],
+    queryKey: ["snippetsData", sensitivity, emailsToAnalyze],
     queryFn: () =>
       fetchFromUrl<SnippetsData>("/v1/gmail-snippets", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ sensitivity }),
+        body: JSON.stringify({ sensitivity, numberOfEmails: emailsToAnalyze }),
       }),
   });
 
@@ -59,6 +65,27 @@ export function Snippets() {
               <Radio value="desc">Least used</Radio>
             </Stack>
           </RadioGroup>
+        </Flex>
+
+        <Flex gap={2}>
+          <Text fontSize={14}>How many emails to analyze:</Text>
+
+          <NumberInput
+            maxW="100px"
+            ml="1rem"
+            value={emailsToAnalyze}
+            onChange={(_: string, value: number) =>
+              emailsToAnalyzeSet(value || 20)
+            }
+            min={5}
+            max={40}
+          >
+            <NumberInputField />
+            <NumberInputStepper>
+              <NumberIncrementStepper />
+              <NumberDecrementStepper />
+            </NumberInputStepper>
+          </NumberInput>
         </Flex>
 
         <Flex gap={2}>

@@ -6,9 +6,10 @@ const router = express.Router();
 
 router.post("/gmail-snippets", async (req, res) => {
   if (req.isAuthenticated() && req.user.accessToken) {
-    const maybeEmailsData = await getEmails(req, 20).catch((e) =>
-      res.send({ error: e }),
-    );
+    const maybeEmailsData = await getEmails(
+      req,
+      req.body?.numberOfEmails || 20,
+    ).catch((e) => res.send({ error: e }));
 
     if (!maybeEmailsData) {
       res.send({ error: "Could not retrieve emails" });
