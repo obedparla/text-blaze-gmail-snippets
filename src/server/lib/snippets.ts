@@ -4,26 +4,26 @@ import nlp from "wink-nlp-utils";
 export function getSnippetsFromText(
   textArray: string[],
   similarityThreshold = 0.85,
+  minimumWords: 1,
 ) {
   const allSentences = textArray.flatMap((text) => {
     // todo splitting \r\n may yield even better results
-    let cleanText = text.replaceAll(/\s+/g, " ");
+    let textLines = text.split(/\r?\n/gm);
 
-    const longSentencesTokens = nlp.string.sentences(cleanText) as string[];
-
-    const sentences = longSentencesTokens.filter(
-      (text) => {
+    const sentences = textLines
+      .flatMap((text) => {
+        // tokenize the text into sentences
+        return nlp.string.sentences(text) as string[];
+      })
+      .filter((text) => {
         const numberOfWords = text.split(" ").length;
 
-        return numberOfWords > 1;
-      },
-    );
+        return numberOfWords > minimumWords;
+      });
 
     // in case a short sentence and a long sentence collide
     return [...new Set([...sentences])];
   });
-
-  console.log("allSentences", allSentences);
 
   const snippetsMap: { [key: string]: number } = {};
 
