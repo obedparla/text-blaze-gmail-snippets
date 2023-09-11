@@ -4,7 +4,6 @@ import nlp from "wink-nlp-utils";
 export function getSnippetsFromText(
   textArray: string[],
   similarityThreshold = 0.85,
-  minimumWords: 1,
 ) {
   const allSentences = textArray.flatMap((text) => {
     // todo splitting \r\n may yield even better results
@@ -18,7 +17,7 @@ export function getSnippetsFromText(
       .filter((text) => {
         const numberOfWords = text.split(" ").length;
 
-        return numberOfWords > minimumWords;
+        return numberOfWords > 1;
       });
 
     // in case a short sentence and a long sentence collide
