@@ -5,13 +5,13 @@
   "scripts": {
     "dev": "nodemon src/server/main.ts -w src/server",
     "start": "NODE_ENV=production ts-node src/server/main.ts",
-    "build": "vite build"
+    "build": "vite build",
+    "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0"
   },
   "dependencies": {
     "@chakra-ui/react": "^2.8.1",
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
-    "cors": "^2.8.5",
     "express": "^4.18.2",
     "express-session": "^1.17.3",
     "framer-motion": "^10.16.4",
@@ -28,8 +28,7 @@
     "ts-node": "^10.9.1",
     "typescript": "^4.9.3",
     "vite-express": "*",
-    "wink-nlp-utils": "^2.1.0",
-    "zustand": "^4.4.1"
+    "wink-nlp-utils": "^2.1.0"
   },
   "devDependencies": {
     "@types/cors": "^2.8.14",
@@ -40,7 +39,12 @@
     "@types/passport-google-oauth20": "^2.0.11",
     "@types/react": "^18.0.26",
     "@types/react-dom": "^18.0.10",
+    "@typescript-eslint/eslint-plugin": "^6.6.0",
+    "@typescript-eslint/parser": "^6.6.0",
     "@vitejs/plugin-react": "^3.0.1",
+    "eslint": "^8.49.0",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint-plugin-react-refresh": "^0.4.3",
     "nodemon": "^2.0.20",
     "vite": "^4.0.4"
   }

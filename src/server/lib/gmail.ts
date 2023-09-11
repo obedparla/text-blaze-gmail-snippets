@@ -53,14 +53,14 @@ export async function getEmails(req: Express.Request, maxResults: number) {
       auth: oauth2Client,
     });
 
-    let response = await gmail.users.messages.list({
+    const response = await gmail.users.messages.list({
       userId: "me",
       maxResults: maxResults,
       labelIds: ["SENT"],
     });
 
     if (response) {
-      let messageIds =
+      const messageIds =
         response.data.messages?.flatMap((msg) => (msg.id ? [msg.id] : [])) ??
         [];
 
@@ -85,7 +85,7 @@ export function getPlainTextEmailWithNoHistory(
   message: gmail_v1.Schema$Message,
 ) {
   const parser = new ParseGmailApi();
-  let plainTextEmail = parser.parseMessage(message).textPlain.trim();
+  const plainTextEmail = parser.parseMessage(message).textPlain.trim();
 
   // return plainTextEmail;
 
@@ -95,9 +95,9 @@ export function getPlainTextEmailWithNoHistory(
 function removeHistory(emailText: string) {
   const textLines = emailText.split(/\r?\n/gm);
 
-  let textLinesWithNoQuotes = [];
+  const textLinesWithNoQuotes = [];
 
-  for (let line of textLines) {
+  for (const line of textLines) {
     if (!line.startsWith(">") && line) {
       textLinesWithNoQuotes.push(line);
     }

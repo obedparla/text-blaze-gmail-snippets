@@ -8,7 +8,7 @@ export function getSnippetsFromText(
 ) {
   const allSentences = textArray.flatMap((text) => {
     // todo splitting \r\n may yield even better results
-    let textLines = text.split(/\r?\n/gm);
+    const textLines = text.split(/\r?\n/gm);
 
     const sentences = textLines
       .flatMap((text) => {
@@ -51,11 +51,13 @@ export function getSnippetsFromText(
   });
 
   const duplicatedSnippetsSortedByOccurrences = Object.entries(snippetsMap)
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     .filter(([_, occurrences]) => occurrences > 1)
     .sort(
-      ([snippetA, occurrencesA], [snippetB, occurrencesB]) =>
-        occurrencesB - occurrencesA,
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      ([_b, occurrencesA], [_a, occurrencesB]) => occurrencesB - occurrencesA,
     )
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     .map(([snippet, _]) => snippet);
 
   return duplicatedSnippetsSortedByOccurrences;
