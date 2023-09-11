@@ -10,8 +10,10 @@ import { Dispatch, SetStateAction } from "react";
 
 export function SensitivitySlider({
   onChange,
+  sensitivity,
 }: {
   onChange: Dispatch<SetStateAction<number>>;
+  sensitivity: number;
 }) {
   const labelStyles = {
     mt: "2",
@@ -23,23 +25,21 @@ export function SensitivitySlider({
     <Slider
       aria-label="sensitiviy-slider"
       onChange={(val) => onChange(val)}
-      defaultValue={0.85}
-      min={0.55}
-      max={0.95}
+      defaultValue={sensitivity}
+      value={sensitivity}
+      min={0.75}
+      max={1}
       step={0.05}
       mr={6}
       ml={4}
     >
-      <SliderMark value={0.55} {...labelStyles}>
+      <SliderMark value={0.75} {...labelStyles}>
         Low
       </SliderMark>
-      <SliderMark value={0.7} {...labelStyles}>
-        Medium
-      </SliderMark>
-      <SliderMark value={0.8} {...labelStyles}>
+      <SliderMark value={0.83} {...labelStyles}>
         Balanced (recommended)
       </SliderMark>
-      <SliderMark value={0.95} {...labelStyles}>
+      <SliderMark value={1} {...labelStyles}>
         High
       </SliderMark>
       <SliderTrack>

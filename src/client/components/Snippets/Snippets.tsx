@@ -4,9 +4,7 @@ import { SnippetsData } from "../../types/snippetsData";
 
 import "./snippets.css";
 import {
-  Divider,
   Flex,
-  Heading,
   Radio,
   RadioGroup,
   Spinner,
@@ -14,14 +12,13 @@ import {
   StackDivider,
   Text,
   Tooltip,
-  useSteps,
 } from "@chakra-ui/react";
 import { useState } from "react";
 import { SensitivitySlider } from "./components/SensitivitySlider";
 
 export function Snippets() {
   const [orderBy, orderBySet] = useState<"asc" | "desc">("asc");
-  const [sensitivity, sensitivitySet] = useState(0.8);
+  const [sensitivity, sensitivitySet] = useState(0.85);
 
   const { isError, isLoading, data, error } = useQuery({
     queryKey: ["snippetsData", sensitivity],
@@ -75,7 +72,10 @@ export function Snippets() {
             <span>&#63;</span>
           </Tooltip>
 
-          <SensitivitySlider onChange={sensitivitySet} />
+          <SensitivitySlider
+            onChange={sensitivitySet}
+            sensitivity={sensitivity}
+          />
         </Flex>
 
         {isLoading ? (
