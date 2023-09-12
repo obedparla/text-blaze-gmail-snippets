@@ -1,12 +1,14 @@
 {
-  "name": "vite-react-typescript-starter",
+  "name": "text-blaze-snippets-obed-parlapiano",
+  "author": "Obed Parlapiano",
   "private": true,
-  "version": "0.0.0",
+  "version": "0.1.0",
   "scripts": {
     "dev": "nodemon src/server/main.ts -w src/server",
     "start": "NODE_ENV=production ts-node src/server/main.ts",
     "build": "vite build",
-    "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0"
+    "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+    "test": "vitest"
   },
   "dependencies": {
     "@chakra-ui/react": "^2.8.1",
@@ -47,6 +49,7 @@
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.3",
     "nodemon": "^2.0.20",
-    "vite": "^4.0.4"
+    "vite": "^4.0.4",
+    "vitest": "^0.34.4"
   }
 }
