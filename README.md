@@ -36,12 +36,16 @@ There are improvements I would do for a production app. Most noteworthy points:
 ### Authentication
 
 The authentication should be more reliable. Right now
-it's using Express' sessions to keep track of the access tokens and user data, which isn't a good solution for a
+it's using Express' sessions to keep track of the access tokens and user data with the default "MemoryStore", which isn't a good solution for a
 production app, but simplifies the app a lot by not requiring a database. I also didn't have time to properly tests if
 the access tokens are being refreshed correctly or what happens when a re-login is required.
 
 There's also no code to log-out of the app. I decided my time was better spent making the UI and the snippet logic
 better.
+
+### Logging
+
+The app has no logging, so if there's an error on the backend/frontend I'd need to check the deployment.
 
 ### Tests
 

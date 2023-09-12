@@ -18,7 +18,7 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use(
   session({
-    secret: process.env.SESSION_SECRET as string,
+    secret: process.env["SESSION_SECRET"] || "",
     resave: false,
     saveUninitialized: true,
   }),
@@ -41,7 +41,6 @@ app.use(AuthRoutes);
 app.use("/v1", SnippetsRoutes);
 app.use("/v1", UserRoutes);
 
-// port is hardcoded since it's in the whitelist for google auth
-ViteExpress.listen(app, 3000, () =>
+ViteExpress.listen(app, Number(process.env["PORT"]) || 3000, () =>
   console.log("Server is listening on port 3000..."),
 );

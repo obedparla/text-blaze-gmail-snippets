@@ -4,8 +4,8 @@ import { Profile } from "passport";
 const GoogleStrategy = googleStrategy.Strategy;
 const passportGoogleStrategy = new GoogleStrategy(
   {
-    clientID: process.env.GOOGLE_CLIENT_ID as string,
-    clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
+    clientID: process.env["GOOGLE_CLIENT_ID"] || "",
+    clientSecret: process.env["GOOGLE_CLIENT_SECRET"] || "",
     callbackURL: "/auth/google/callback",
   },
   (accessToken, refreshToken, profile, done) => {
