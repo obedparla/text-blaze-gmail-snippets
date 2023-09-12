@@ -10,6 +10,7 @@ import {
   CardHeader,
   Heading,
   Spinner,
+  Text,
 } from "@chakra-ui/react";
 
 export function BodyContent() {
@@ -50,7 +51,17 @@ export function BodyContent() {
       ) : (
         <Card variant={"elevated"}>
           <CardHeader>
-            <Heading size="md">Please log in to use the app</Heading>
+            <Heading size="md">
+              <Text
+                as={"a"}
+                color={"var(--brandColor)"}
+                href={"/auth/google"}
+                textDecoration={"underline"}
+              >
+                Log in
+              </Text>{" "}
+              to analyze your emails
+            </Heading>
           </CardHeader>
         </Card>
       )}
