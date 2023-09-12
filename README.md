@@ -15,6 +15,7 @@ run the server: `npm run start`
 - "wink-nlp" and "natural" for Natural Language Processing (snippet generation, more on that below)
 - Chakra.ui for UI components. Made it easier to quickly prototype the UI
 - React Query for fetching data and state management
+- Vite-express: integrates Vite with express for easy development.
 
 ## Solution and challenges for finding snippets
 
