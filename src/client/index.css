@@ -32,3 +32,18 @@ body {
   max-width: 800px;
   margin: 40px auto;
 }
+
+@media (max-width: 650px) {
+  .hero_section {
+    padding: 20px;
+  }
+
+  .hero_section__content{
+    flex-direction: column-reverse;
+    gap: 20px;
+  }
+
+  .hero_section__content img {
+    width: 50%;
+  }
+}
