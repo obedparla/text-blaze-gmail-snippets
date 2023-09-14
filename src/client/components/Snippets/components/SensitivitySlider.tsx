@@ -27,19 +27,19 @@ export function SensitivitySlider({
       onChange={(val) => onChange(val)}
       defaultValue={sensitivity}
       value={sensitivity}
-      min={0.75}
-      max={1}
+      min={0.7}
+      max={0.9}
       step={0.05}
       mr={6}
       ml={4}
     >
-      <SliderMark value={0.75} {...labelStyles}>
+      <SliderMark value={0.7} {...labelStyles}>
         Low
       </SliderMark>
-      <SliderMark value={0.83} {...labelStyles}>
+      <SliderMark value={0.78} {...labelStyles}>
         Balanced (recommended)
       </SliderMark>
-      <SliderMark value={1} {...labelStyles}>
+      <SliderMark value={0.9} {...labelStyles}>
         High
       </SliderMark>
       <SliderTrack>

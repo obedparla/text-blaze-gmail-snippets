@@ -22,8 +22,8 @@ import { SensitivitySlider } from "./components/SensitivitySlider";
 
 export function Snippets() {
   const [orderBy, orderBySet] = useState<"asc" | "desc">("asc");
-  const [sensitivity, sensitivitySet] = useState(0.85);
-  const [emailsToAnalyze, emailsToAnalyzeSet] = useState(20);
+  const [sensitivity, sensitivitySet] = useState(0.8);
+  const [emailsToAnalyze, emailsToAnalyzeSet] = useState(40);
 
   const { isError, isLoading, data, error } = useQuery({
     queryKey: ["snippetsData", sensitivity, emailsToAnalyze],
@@ -70,8 +70,8 @@ export function Snippets() {
             onChange={(_: string, value: number) =>
               emailsToAnalyzeSet(value || 20)
             }
-            min={5}
-            max={40}
+            min={10}
+            max={100}
           >
             <NumberInputField />
             <NumberInputStepper>
