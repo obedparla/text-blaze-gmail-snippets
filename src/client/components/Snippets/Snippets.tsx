@@ -1,6 +1,5 @@
-import { fetchFromUrl } from "../../utils/fetch";
+import {fetchGmailSnippets} from "../../utils/fetch";
 import { useQuery } from "react-query";
-import { SnippetsData } from "../../types/snippetsData";
 
 import "./snippets.css";
 import {
@@ -29,13 +28,7 @@ export function Snippets() {
   const { isError, isLoading, data, error } = useQuery({
     queryKey: ["snippetsData", sensitivity, emailsToAnalyze],
     queryFn: () =>
-      fetchFromUrl<SnippetsData>("/v1/gmail-snippets", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ sensitivity, numberOfEmails: emailsToAnalyze }),
-      }),
+      fetchGmailSnippets(sensitivity, emailsToAnalyze)
   });
 
   if (isError) {
@@ -93,7 +86,7 @@ export function Snippets() {
             Sensitivity:
           </Text>
           <Tooltip
-            label="Changes how similar two sentences must be to qualify as a snippet. Lower means more snippets but less accurracy."
+            label="Changes how similar two sentences must be to qualify as a snippet. Lower means more snippets but less accuracy."
             fontSize="md"
           >
             <span>&#63;</span>

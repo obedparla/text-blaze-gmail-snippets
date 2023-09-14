@@ -7,16 +7,23 @@ const router = express.Router();
 router.post("/gmail-snippets", async (req, res) => {
   if (req.isAuthenticated() && req.user.accessToken) {
     const maybeEmailsData = await getEmails(
-      req,
+      req.user.accessToken,
       req.body?.numberOfEmails || 20,
     ).catch((e) => res.send({ error: e }));
 
     if (!maybeEmailsData) {
+      res.statusCode = 500;
       res.send({ error: "Could not retrieve emails" });
+
     } else if ("error" in maybeEmailsData) {
+      res.statusCode = 500;
       res.send({ error: maybeEmailsData.error });
     } else if ("emails" in maybeEmailsData) {
       try {
+        if (maybeEmailsData.newAccessToken){
+          req.user.accessToken = maybeEmailsData.newAccessToken;
+        }
+
         const plainTextEmailBodies = maybeEmailsData.emails.map((email) =>
           getPlainTextEmailWithNoHistory(email.data),
         );
@@ -28,11 +35,12 @@ router.post("/gmail-snippets", async (req, res) => {
 
         res.send({
           snippets,
-          plainTextEmailBodies,
-          emails: maybeEmailsData.emails,
-          nextPageToken: maybeEmailsData.nextPageToken,
+          // not used, but this would be useful when implementing pagination
+          // nextPageToken: maybeEmailsData.nextPageToken,
         });
+
       } catch (e) {
+        res.statusCode = 401;
         res.send({ error: e });
       }
     }

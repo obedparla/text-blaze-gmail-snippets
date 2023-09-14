@@ -27,10 +27,8 @@ async function refreshAccessTokenIfNeeded(
   }
 }
 
-export async function getEmails(req: Express.Request, maxResults: number) {
+export async function getEmails(accessToken: string, maxResults: number) {
   const oauth2Client = new google.auth.OAuth2();
-
-  const accessToken = req.user.accessToken;
 
   if (!accessToken) return null;
 
@@ -44,8 +42,6 @@ export async function getEmails(req: Express.Request, maxResults: number) {
   if (!maybeNewAccessToken) {
     return null;
   }
-
-  req.user.accessToken = maybeNewAccessToken;
 
   try {
     const gmail = google.gmail({
@@ -64,16 +60,19 @@ export async function getEmails(req: Express.Request, maxResults: number) {
         response.data.messages?.flatMap((msg) => (msg.id ? [msg.id] : [])) ??
         [];
 
+      const emails = await Promise.all(
+              messageIds.map((id) =>
+                  gmail.users.messages.get({
+                    userId: "me",
+                    id: `${id}`,
+                  }),
+              ),
+          );
+
       return {
         nextPageToken: response.data.nextPageToken,
-        emails: await Promise.all(
-          messageIds.map((id) =>
-            gmail.users.messages.get({
-              userId: "me",
-              id: `${id}`,
-            }),
-          ),
-        ),
+        emails,
+        newAccessToken: maybeNewAccessToken
       };
     }
   } catch (error) {
@@ -87,17 +86,22 @@ export function getPlainTextEmailWithNoHistory(
   const parser = new ParseGmailApi();
   const plainTextEmail = parser.parseMessage(message).textPlain.trim();
 
-  // return plainTextEmail;
-
   return removeHistory(plainTextEmail);
 }
 
+/**
+ * A gmail email can have "history" at the end of the email. It starts with "On Thu, <date> .... <obed parlapiano ...> wrote:
+ * Remove that history to leave the email only with the body content
+ *
+ * Note: a side-effect on this function is that any quote from the email body will also be removed, since it removes any line starting with ">"
+ * @param emailText
+ */
 function removeHistory(emailText: string) {
-  const textLines = emailText.split(/\r?\n/gm);
+  const textSeparatedByNewLines = emailText.split(/\r?\n/gm);
 
   const textLinesWithNoQuotes = [];
 
-  for (const line of textLines) {
+  for (const line of textSeparatedByNewLines) {
     if (!line.startsWith(">") && line) {
       textLinesWithNoQuotes.push(line);
     }

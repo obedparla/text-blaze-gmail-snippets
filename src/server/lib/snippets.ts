@@ -11,6 +11,7 @@ export function getSnippetsFromText(
     const sentences = textLines
       .flatMap((text) => {
         // tokenize the text into sentences
+        // note: "wink-nlp-utils" offers no types
         return nlp.string.sentences(text) as string[];
       })
       .filter((text) => {
