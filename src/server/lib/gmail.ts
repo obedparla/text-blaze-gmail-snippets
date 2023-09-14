@@ -97,7 +97,9 @@ export function getPlainTextEmailWithNoHistory(
  * @param emailText
  */
 function removeHistory(emailText: string) {
-  const textSeparatedByNewLines = emailText.split(/\r?\n/gm);
+  // remove "On Sat, Jul 8, 2023 at 4:44 Test Support <support@test.com>\r\nwrote:"
+  const emailTextWithoutHistoryLabel = emailText.replace(/on[\s\S]+<[\s\S]+>[\s\S]+wrote:/gmi, '')
+  const textSeparatedByNewLines = emailTextWithoutHistoryLabel.split(/\r?\n/gm);
 
   const textLinesWithNoQuotes = [];
 
@@ -107,9 +109,10 @@ function removeHistory(emailText: string) {
     }
   }
 
+  const lastLine = textLinesWithNoQuotes[textLinesWithNoQuotes.length - 1];
   if (
-    textLinesWithNoQuotes.length > 0 &&
-    textLinesWithNoQuotes[textLinesWithNoQuotes.length - 1].endsWith("> wrote:")
+      lastLine &&
+      lastLine.endsWith("> wrote:")
   ) {
     textLinesWithNoQuotes.pop();
   }
